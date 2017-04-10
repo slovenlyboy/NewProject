@@ -1,4 +1,4 @@
-#include "Game\Gimmik.h"
+#include "Gimmik.h"
 #include "Game\GameMain.h"
 #include <string>
 
