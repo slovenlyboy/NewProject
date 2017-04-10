@@ -35,6 +35,11 @@ private:
 	bool mouseState = 0;
 	int m_timeCount = 0;	//	ƒJƒEƒ“ƒg
 	int cnt = 0;			//	ŠÔ
+
+	int soundFlag = 0;
+	int soundSet = 0;
+	int soundCnt = 0;
+
 public:
 	GamePlay();
 	void Initialize();//‰Šú‰»

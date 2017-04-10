@@ -226,6 +226,43 @@ void Player::UpData()
 		SetState(1);
 		m_actCnt = 0;
 	}
+	if (soundFlag != 0)
+	{
+
+		soundCnt++;
+
+		switch (soundFlag)
+		{
+		case 1:
+			ADX2Le::Play(Walk1);
+			soundSet = 20;
+			break;
+		case 2:
+			ADX2Le::Play(Walk2);
+			soundSet = 20;
+			break;
+		case 3:
+			ADX2Le::Play(UpLadder);
+			soundSet = 20;
+			break;
+
+		}
+
+		soundFlag = 20;
+
+
+		if (soundCnt >= soundSet)
+		{
+
+			soundFlag = 0;
+			soundCnt = 0;
+		}
+
+	}
+
+
+
+
 
 
 }
@@ -248,23 +285,31 @@ void Player::Render()
 	}
 	
 
-
-	//左右に移動している場合
-	if (GetSpdX() != 0)
+	if (GetJump() == FALSE)
 	{
-		//移動してる場合歩く
-		switch (m_cnt / 15 % 4)
+		//左右に移動している場合
+		if (GetSpdX() != 0)
 		{
-		case 0:
-			SetGrpX(0);
-			break;
-		case 1:
-		case 3:
-			SetGrpX(32);
-			break;
-		case 2:
-			SetGrpX(64);
-			break;
+			if (soundFlag == 0&&GetHold()==FALSE)
+			{
+				if (serectMap == 1)soundFlag = 1;
+
+				if (serectMap == 2)soundFlag = 2;
+			}
+			//移動してる場合歩く
+			switch (m_cnt / 15 % 4)
+			{
+			case 0:
+				SetGrpX(0);
+				break;
+			case 1:
+			case 3:
+				SetGrpX(32);
+				break;
+			case 2:
+				SetGrpX(64);
+				break;
+			}
 		}
 	}
 
@@ -272,6 +317,7 @@ void Player::Render()
 	if (GetClimb() == TRUE)
 	{
 		SetGrpY(96);
+
 
 		//移動してる場合歩く
 		switch (m_cnt / 15 % 4)
@@ -389,7 +435,7 @@ void Player::PlayerControl(void)
 				SetDir(RIGHT);
 			}
 			
-			if (*mapdata == 0 || *mapdata == 2 ||  *mapdata == 4|| *mapdata == 6 || *mapdata == 8|| *mapdata == 12 || *mapdata == 13 || *mapdata == 16)//移動可能マップチップ
+			if (*mapdata == 0 || *mapdata == 2 || *mapdata == 3 || *mapdata == 4|| *mapdata == 6 || *mapdata == 8|| *mapdata == 12 || *mapdata == 13 || *mapdata == 16)//移動可能マップチップ
 			{
 				SetSpdX(spd);
 				SetClimb(FALSE);
@@ -409,7 +455,7 @@ void Player::PlayerControl(void)
 
 			
 		
-			if (*mapdata == 0 || *mapdata == 2 || *mapdata == 4 || *mapdata == 6 || *mapdata == 8 || *mapdata == 12 || *mapdata == 13 || *mapdata == 16)
+			if (*mapdata == 0 || *mapdata == 2 || *mapdata == 3 || *mapdata == 4 || *mapdata == 6 || *mapdata == 8 || *mapdata == 12 || *mapdata == 13 || *mapdata == 16)
 			{
 
 				SetSpdX(-spd);
@@ -432,6 +478,10 @@ void Player::PlayerControl(void)
 				SetSpdY(-spd);
 				SetClimb(TRUE);
 			}
+			if (soundFlag == 0)
+			{
+				soundFlag = 3;
+			}
 		}
 		else if (g_key.Down)//上キー押下
 		{
@@ -443,10 +493,14 @@ void Player::PlayerControl(void)
 				SetSpdY(spd);
 				SetClimb(TRUE);
 			}
+			if (soundFlag == 0)
+			{
+				soundFlag = 3;
+			}
 		}
 		if (g_keyTracker->pressed.Z)
 		{
-			ADX2Le::Play(SAND);
+			ADX2Le::Play(SAND,2.0f);
 		}
 
 		if (g_key.Z)//Zキー押下時

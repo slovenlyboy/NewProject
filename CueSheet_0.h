@@ -30,8 +30,8 @@
 #define Enter      (  8) /*  // 決定音 */
 #define CRI_CUESHEET_0__CUE_ID_9      (  9) /*  // 着地_塔_ */
 #define CRI_CUESHEET_0__CUE_ID_10     ( 10) /*  // 着地_森_ */
-#define CRI_CUESHEET_0__CUE_ID_11     ( 11) /*  // 足音_塔_ */
-#define CRI_CUESHEET_0__CUE_ID_12     ( 12) /*  // 足音_森_ */
+#define Walk1     ( 11) /*  // 足音_塔_ */
+#define Walk2     ( 12) /*  // 足音_森_ */
 #define Select     ( 13) /*  // 選択音 */
 #define BGM_CLEAR      ( 14) /*   */
 #define BGM_OVER       ( 15) /*   */

@@ -44,7 +44,7 @@ GamePlay::GamePlay()
 	// マップの設定
 	if (serectMap == 1)
 	{
-		ADX2Le::Play(TOWER_BGM);
+		ADX2Le::Play(TOWER_BGM,0.2f);
 		cnt = 60;//塔ステージ制限時間の設定
 		enemyNum = 12;
 		importData("map1.csv");//マップデータの読み込み
@@ -52,7 +52,7 @@ GamePlay::GamePlay()
 	}
 	else if (serectMap == 2)
 	{
-		ADX2Le::Play(BGM_WOOD);
+		ADX2Le::Play(BGM_WOOD,0.8f);
 		cnt = 40;//森ステージの制限時間の設定
 		enemyNum = 1;
 		importData("map2.csv");//マップデータの読み込み
@@ -214,6 +214,7 @@ void GamePlay::Update()
 			{
 				if (player->GetHold() == TRUE)
 				{
+					ADX2Le::Play(DAMAGE);
 					enemy[i]->SetState(0);
 				}
 				else
@@ -226,6 +227,40 @@ void GamePlay::Update()
 			}
 			enemy[i]->UpData();
 		}
+	}
+
+	if (soundFlag != 0)
+	{
+
+		soundCnt++;
+
+		switch (soundFlag)
+		{
+		case 1:
+			ADX2Le::Play(Rope);
+			soundSet = 20;
+			break;
+		case 2:
+			ADX2Le::Play(Ice2);
+			soundSet = 10;
+			break;
+		case 3:
+			ADX2Le::Play(Ice2);
+			soundSet = 10;
+			break;
+
+		}
+
+		soundFlag = 20;
+
+
+		if (soundCnt >= soundSet)
+		{
+		
+			soundFlag = 0;
+			soundCnt = 0;
+		}
+
 	}
 
 
@@ -280,6 +315,15 @@ void GamePlay::Render()
 		{
 			g_tip[i].grp_x = 160;
 			g_tip[i].grp_y = 0;
+			g_tip[i].grp_w = CHIP_SIZE;
+			g_tip[i].grp_h = CHIP_SIZE;
+		}
+
+
+		if (g_map[i / MAP_H][i % MAP_W] == 2 && serectMap == 2)
+		{
+			g_tip[i].grp_x = 160;
+			g_tip[i].grp_y = 32;
 			g_tip[i].grp_w = CHIP_SIZE;
 			g_tip[i].grp_h = CHIP_SIZE;
 		}
@@ -449,7 +493,7 @@ void  GamePlay::Collisionfloor(ObjectBase* obj)
 		{
 			if (g_map[map_y][map_x] == 14)
 			{
-				
+				if (soundFlag == 0)soundFlag = 2;
 				switch (obj->GetDir())
 				{
 				case LEFT:
@@ -500,7 +544,7 @@ void  GamePlay::Collisionfloor(ObjectBase* obj)
 	}
 	else if (g_map[map_y][map_x] == 10)
 	{
-		ADX2Le::Play(HiJump);
+		ADX2Le::Play(HiJump,0.2f);
 		obj->SetSpdY(0.0f);
 		obj->SetJump(TRUE);
 		obj->SetJumpPower(-20.0f);
@@ -594,7 +638,7 @@ void  GamePlay::Collisionfloor(ObjectBase* obj)
 	}
 	else if (g_map[map_y][map_x] == 10)
 	{
-		ADX2Le::Play(HiJump);
+		ADX2Le::Play(HiJump,0.2f);
 		obj->SetSpdY(0.0f);
 		obj->SetJump(TRUE);
 		obj->SetJumpPower(-20.0f);
@@ -626,6 +670,9 @@ void  GamePlay::Collisionfloor(ObjectBase* obj)
 		obj->SetJump(TRUE);
 		obj->SetSpdY(0.0f);
 		obj->SetSpdX(3.0f);
+
+		if(soundFlag == 0)soundFlag = 1;
+
 	}
 	
 }

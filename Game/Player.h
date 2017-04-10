@@ -18,6 +18,11 @@ class Player :public ObjectBase
 private:
 	int m_cnt;
 	int m_actCnt;
+
+	int soundFlag = 0;
+	int soundSet = 0;
+	int soundCnt = 0;
+
 public:
 	Player();//コンストラクタ
 	~Player();//デストラクタ
