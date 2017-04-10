@@ -1,7 +1,9 @@
 #pragma once
 #include <iostream>
-#include "../Game/ObjectBase.h"
-#include "../Texture.h"
+#include "Game\ObjectBase.h"
+#include "Texture.h"
+//#include "../Game/ObjectBase.h"
+//#include "../Texture.h"
 
 class Gimmik :public ObjectBase
 {
