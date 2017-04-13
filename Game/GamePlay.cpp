@@ -320,7 +320,7 @@ void GamePlay::Render()
 		}
 
 
-		if (g_map[i / MAP_H][i % MAP_W] == 2 && serectMap == 2)
+		if ((g_map[i / MAP_H][i % MAP_W] == 2||g_map[i / MAP_H][i % MAP_W] == 21) && serectMap == 2)
 		{
 			g_tip[i].grp_x = 160;
 			g_tip[i].grp_y = 32;
@@ -407,7 +407,7 @@ void GamePlay::Render()
 
 	rect = { 0, 0,cnt*(serectMap+1),16};
 	g_spriteBatch->Draw(g_TimeImage->m_pTexture,
-		Vector2(420, 424),
+		Vector2(420, 420),
 		&rect, Colors::White, 0.0f, Vector2(0, 0), 0.8f);
 
 

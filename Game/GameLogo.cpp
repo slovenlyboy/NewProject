@@ -58,6 +58,11 @@ void GameLogo::Render()
 
 	//ƒƒS‰æ‘œ‚Ì•\Ž¦
 	rect = { 0, 0,640,480 };
+	g_spriteBatch->Draw(g_BlackImage->m_pTexture,
+		Vector2(0, 0));
+
+
+	rect = { 0, 0,640,480 };
 	g_spriteBatch->Draw(g_LogoImage->m_pTexture,
 		Vector2(0, 0));
 	
