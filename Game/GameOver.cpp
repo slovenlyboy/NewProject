@@ -33,21 +33,29 @@ void GameOver::Update()
 	// スペースキーでタイトルに遷移
 	if (g_keyTracker->pressed.Space)
 	{
-		m_flag = 1;
-		
+		g_NextScene = TITLE;	
 	}
 
+	m_cnt++;
+	
+	if (m_cnt >= 480)
+	{
+		m_flag = 1;
+
+	}
 
 	if (m_flag == 1)
 	{
-		m_cnt++;
 		m_fade += 0.01f;
 	}
 
-	if (m_cnt >= 120)
+	if (m_cnt >= 600)
 	{
+		//タイトルへ行く
 		g_NextScene = TITLE;
 	}
+
+	
 
 }
 
