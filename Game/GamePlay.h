@@ -51,6 +51,7 @@ public:
 	void GamePlay::SetSpeadToAsaaignedPosition(ObjectBase* obj, float AposX, float AposY, float Time);//指定座標移動関数
 	void GamePlay::ScrollMap(void);
 	bool GamePlay::Collision(ObjectBase* obj1, ObjectBase*obj2);
+	bool AttackCollision(ObjectBase* obj1, ObjectBase*obj2, int Dir);//攻撃判定
 	//マップスクロール量検出
 	~GamePlay();
 

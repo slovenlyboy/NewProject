@@ -210,20 +210,24 @@ void GamePlay::Update()
 	{
 		if (enemy[i]->GetState() == 1&&player->GetState()==1)
 		{
-			if (Collision(player, enemy[i]) == TRUE)
+
+			//攻撃判定
+			if (AttackCollision(player, enemy[i], player->GetDir())== TRUE)
 			{
 				if (player->GetHold() == TRUE)
 				{
 					ADX2Le::Play(DAMAGE);
 					enemy[i]->SetState(0);
 				}
-				else
-				{
+			}
+
+			//衝突判定
+			if (Collision(player, enemy[i]) == TRUE)
+			{
 					//ダメージ判定処理
 					ADX2Le::Play(Hit);
 					player->SetState(2);
 					cnt -= 2;
-				}
 			}
 			enemy[i]->UpData();
 		}
@@ -806,7 +810,7 @@ void GamePlay::ScrollMap(void)
 	{
 		g_ScrollMap_y = 0;
 	}
-	//else if (g_ScrollMap_y >(MAP_H  * CHIP_SIZE - SCREEN_HEIGHT) || serectMap == 2)
+	
 	else if (g_ScrollMap_y >(MAP_H  * CHIP_SIZE - SCREEN_HEIGHT) )
 	{
 		g_ScrollMap_y = (MAP_H * CHIP_SIZE - SCREEN_HEIGHT);
@@ -816,8 +820,8 @@ void GamePlay::ScrollMap(void)
 bool GamePlay::Collision(ObjectBase* obj1, ObjectBase*obj2)
 {
 	/*四角形の当たり判定*/
-	if ((obj1->GetPosX() /*- g_ScrollMap_x */ <= (obj2->GetPosX() + obj2->GetGrpW())) &&
-		((obj1->GetPosX() /*- g_ScrollMap_x */+ obj1->GetGrpW()) >= obj2->GetPosX()) &&
+	if ((obj1->GetPosX()  <= (obj2->GetPosX() + obj2->GetGrpW())) &&
+		((obj1->GetPosX() + obj1->GetGrpW()) >= obj2->GetPosX()) &&
 		(obj1->GetPosY() <= (obj2->GetPosY() + obj2->GetGrpH())) &&
 		((obj1->GetPosY() + obj1->GetGrpH() >= obj2->GetPosY())))
 	{
@@ -827,4 +831,47 @@ bool GamePlay::Collision(ObjectBase* obj1, ObjectBase*obj2)
 	{
 		return 0;
 	}
+}
+
+bool GamePlay::AttackCollision(ObjectBase* obj1, ObjectBase*obj2,int Dir)
+{
+
+
+	switch (Dir)
+	{
+	case LEFT:
+
+		/*四角形の当たり判定*/
+		if ((obj1->GetPosX() -5 <= (obj2->GetPosX() + obj2->GetGrpW())) &&
+			((obj1->GetPosX() + obj1->GetGrpW()) >= obj2->GetPosX()) &&
+			(obj1->GetPosY() <= (obj2->GetPosY() + obj2->GetGrpH())) &&
+			((obj1->GetPosY() + obj1->GetGrpH() >= obj2->GetPosY())))
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+
+		break;
+	case RIGHT:
+
+		/*四角形の当たり判定*/
+		if ((obj1->GetPosX() <= (obj2->GetPosX() + obj2->GetGrpW())) &&
+			((obj1->GetPosX() + obj1->GetGrpW()) + 5 >= obj2->GetPosX()) &&
+			(obj1->GetPosY() <= (obj2->GetPosY() + obj2->GetGrpH())) &&
+			((obj1->GetPosY() + obj1->GetGrpH() >= obj2->GetPosY())))
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+
+		break;
+	}
+
+	
 }
